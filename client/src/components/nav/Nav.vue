@@ -7,7 +7,9 @@
         <a class="nav-link scrollactive-item" href="#services">Услуги</a>
       </li>
       <li class="nav-item ml-5 mr-5">
-        <a class="nav-link scrollactive-item" href="#discount">Акции <b-badge pill class="vitan-badge">3</b-badge></a>
+        <a class="nav-link scrollactive-item" href="#discount">Акции
+          <b-badge pill class="vitan-badge">2</b-badge>
+        </a>
       </li>
       <li class="nav-item ml-5 mr-5">
         <a class="nav-link scrollactive-item" href="#about">О Сервисе</a>
@@ -62,6 +64,5 @@
    background-color: #ED661A;
    color: #fff;
    }
-
  }
 </style>
