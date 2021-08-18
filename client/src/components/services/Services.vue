@@ -12,7 +12,7 @@
                   </h6>
               </b-col>
           </b-row>
-          <b-row class="mt-4">
+          <b-row class="mt-4" ref="servicesTop">
             <b-col>
               <div class="growing-search" style="margin-bottom: 1rem;">
                 <div class="input">
@@ -21,7 +21,7 @@
                     name="search"
                     class="growing-search"
                     id="search_input"
-                    placeholder="Поиск услуги"
+                    placeholder="Поиск"
                     v-model="searchText"
                     @input="updateSearchList(searchText)"
                   >
@@ -205,6 +205,9 @@
 export default {
   methods:
     {
+      scrollToServicesTop() {
+        this.$refs.servicesTop.scrollIntoView();
+      },
       setSearchInputFocus() {
         document.getElementById('search_input').focus();
       },
@@ -497,7 +500,7 @@ export default {
   border: none;
   font-size: inherit;
   padding-top: 10px;
-  padding-left: 10px;
+  padding-left: 1rem;
   padding-bottom: 10px;
   padding-right: 35px;
   color: #ED661A;
@@ -507,8 +510,7 @@ export default {
 }
 
 .growing-search .input input::placeholder {
-  color: rgba(0,0,0, 0.4);
-  font-size: 1.2rem;
+  color: rgba(0,0,0, 0.3);
 }
 
 .growing-search .input input:focus{
@@ -606,7 +608,7 @@ transition: 0.3s;
 box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
 }
 
-.card-hover:hover {
+.card-hover:hover, .card-hover:active {
   -webkit-box-shadow: 0 1rem 1.5rem rgba(0,0,0,0.5) !important;
   box-shadow: 0 1rem 1.5rem rgba(0,0,0,0.5) !important;
   background-color: rgba(0,0,0, 0.05);
