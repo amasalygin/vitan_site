@@ -1,7 +1,32 @@
 <template>
 <scrollactive class="navbar navbar-expand-lg sticky-top">
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-    <b-collapse id="nav-collapse" is-nav>
+    <b-navbar-brand href="#main">VITAN</b-navbar-brand>
+    <b-icon v-b-modal.menu-modal
+      class="menu-toggle-button"
+      style="color: #ED661A"
+      icon="gear-wide-connected"
+    >
+    </b-icon>
+    <b-modal id="menu-modal" class="menu-modal" hide-footer>
+      <template #modal-header>
+        <b-navbar-brand>VITAN</b-navbar-brand>
+        <b-icon
+          class="menu-toggle-button-x"
+          icon="x"
+          @click="closeMenu()"
+        >
+        </b-icon>
+      </template>
+      <div class="menu-content">
+        <a @click="closeMenu()" href="#services">Услуги</a>
+        <a @click="closeMenu()" href="#discount">Акции
+          <b-badge pill class="vitan-badge">2</b-badge>
+        </a>
+        <a @click="closeMenu()" href="#about">О Сервисе</a>
+        <a @click="closeMenu()" href="#">Контакты</a>
+      </div>
+    </b-modal>
+    <b-collapse id="nav-collapse" class="desktop-nav" is-nav>
       <b-navbar-nav class="mx-auto">
       <li class="nav-item ml-5 mr-5">
         <a class="nav-link scrollactive-item" href="#services">Услуги</a>
@@ -22,13 +47,90 @@
 </scrollactive>
 </template>
 
-<style lang="scss">
+<script>
+export default {
+  methods:
+    {
+      closeMenu() {
+        this.$bvModal.hide('menu-modal');
+      },
+    },
+};
+</script>
 
+<style lang="scss">
   // Import Bootstrap and BootstrapVue source SCSS files
   @import '~bootstrap/scss/bootstrap.scss';
   @import '~bootstrap-vue/src/index.scss';
+  .menu-toggle-button{
+    font-size: 1.5rem;
+    color: #ED661A;
+  }
 
-  // General style overrides and custom classes
+  .menu-toggle-button-x{
+    font-size: 2rem;
+    color: #ED661A;
+  }
+
+  .navbar-brand{
+    color: #ED661A;
+    font-weight: 1000;
+  }
+
+  .navbar-brand:hover{
+    color: #ED661A;
+  }
+
+  .modal-dialog{
+    margin: 0px;
+  }
+
+  .modal-header-content{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .modal-content{
+    height: 100vh;
+    border-radius: 0;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+  }
+
+  .modal-header{
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: none;
+    button{
+      color: #ED661A;
+    }
+  }
+
+  .menu-content{
+    display: flex;
+    flex-flow: column;
+    justify-content: end;
+    gap: 1.5rem;
+    padding-right: 1rem;
+    border: none;
+    border-radius: 0;
+    a{
+      font-size: 1.8rem;
+      font-weight: 600;
+      text-align: right;
+      color: var(--light);
+    }
+    a:hover{
+      text-decoration: none;
+    }
+  }
+
+  .vitan-badge{
+    background-color: #ED661A;
+    color: #fff;
+   }
+
   .navbar {
     background: #000;
   }
@@ -59,10 +161,11 @@
       -webkit-transition: all .2s ease-in-out 0s;
       transition: all .2s ease-in-out 0s;
     }
-
-   .vitan-badge{
-   background-color: #ED661A;
-   color: #fff;
-   }
  }
+
+ @include media-breakpoint-down(md){
+  .desktop-nav {
+    display: none;
+  }
+}
 </style>

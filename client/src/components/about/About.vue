@@ -4,8 +4,4 @@
 </template>
 
 <style>
-.main-wrapper {
-height: 100vh;
-overflow: auto;
-}
 </style>

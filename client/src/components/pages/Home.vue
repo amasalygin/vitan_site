@@ -2,9 +2,7 @@
     <b-container fluid style="padding-left: 0px; padding-right:0px;">
         <Nav />
         <section id="main" class="main-wrapper">
-            <b-col class="mt-5">
-                <Main/>
-            </b-col>
+            <Main/>
         </section>
         <section id="services">
             <Services />
@@ -39,5 +37,8 @@ export default {
 <style>
 .main-wrapper{
 background-color: #000;
+display: flex;
+height: 100vh;
+overflow: auto;
 }
 </style>
