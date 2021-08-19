@@ -34,7 +34,7 @@
                         </b-button>
                         <b-button
                         class="vitan-button-outline"
-                        @click="sendBackCallRequest('79519359487')">
+                        v-b-modal.backCallModal>
                         Обратный звонок
                     </b-button>
                 </div>
@@ -50,6 +50,19 @@
                 </b-img>
             </div>
         </div>
+
+        <b-modal id="backCallModal" class="menu-modal" hide-footer>
+            <template #modal-header>
+            </template>
+            <div class="menu-content">
+                <a @click="closeMenu()" href="#services">Услуги</a>
+                <a @click="closeMenu()" href="#discount">Акции
+                <b-badge pill class="vitan-badge">2</b-badge>
+                </a>
+                <a @click="closeMenu()" href="#about">О Сервисе</a>
+                <a @click="closeMenu()" href="#">Контакты</a>
+            </div>
+        </b-modal>
     </b-container>
 </template>
 
