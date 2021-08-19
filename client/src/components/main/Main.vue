@@ -33,7 +33,8 @@
                         Записаться
                         </b-button>
                         <b-button
-                        class="vitan-button-outline">
+                        class="vitan-button-outline"
+                        @onClick="sendBackCallRequest('79519359487')">
                         Обратный звонок
                     </b-button>
                 </div>
@@ -51,6 +52,23 @@
         </div>
     </b-container>
 </template>
+
+<script>
+export default {
+  methods:
+    {
+      sendBackCallRequest(text) {
+        var url = "https://noisy-truth-ec30.amasalygin.workers.dev/?text=" + text
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send();
+      },
+    },
+}
+</script>
 
 <style scoped lang="scss">
 @import '~bootstrap/scss/bootstrap.scss';
