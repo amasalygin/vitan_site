@@ -34,7 +34,7 @@
                         </b-button>
                         <b-button
                         class="vitan-button-outline"
-                        @onClick="sendBackCallRequest('79519359487')">
+                        @click="sendBackCallRequest('79519359487')">
                         Обратный звонок
                     </b-button>
                 </div>
