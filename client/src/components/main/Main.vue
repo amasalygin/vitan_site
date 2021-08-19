@@ -58,16 +58,15 @@ export default {
   methods:
     {
       sendBackCallRequest(text) {
-        var url = "https://noisy-truth-ec30.amasalygin.workers.dev/?text=" + text
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", url);
-        
-        xhr.setRequestHeader("Accept", "application/json");
-        xhr.setRequestHeader("Content-type", "application/json");
-        xhr.send();
+        var url = "https://noisy-truth-ec30.amasalygin.workers.dev/?text=" + text; // eslint-disable-line
+        var xhr = new XMLHttpRequest(); // eslint-disable-line
+        xhr.open("GET", url); // eslint-disable-line
+        xhr.setRequestHeader("Accept", "application/json"); // eslint-disable-line
+        xhr.setRequestHeader("Content-type", "application/json"); // eslint-disable-line
+        xhr.send(); // eslint-disable-line
       },
     },
-}
+};
 </script>
 
 <style scoped lang="scss">
