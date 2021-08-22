@@ -262,6 +262,7 @@ p{
 
 .input {
   margin-right: 0;
+  outline: none;
   border: none;
   font-size: 1.5rem;
   padding-top: 10px;
@@ -277,7 +278,20 @@ p{
   text-align: center;
 }
 
+.input:focus{
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #ED661A;
+}
+
+.input:hover{
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #ED661A;
+}
+
 .input:focus-visible {
+    border: none;
   border-bottom: 1px solid #ED661A;
   outline: none;
 }
