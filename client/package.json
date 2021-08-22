@@ -12,6 +12,7 @@
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.16.0",
+    "imask": "^6.1.0",
     "sass": "^1.37.0",
     "sass-loader": "^10.1.1",
     "vue": "^2.6.14",

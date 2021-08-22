@@ -1,12 +1,18 @@
 <template>
-<scrollactive class="navbar navbar-expand-lg sticky-top">
-    <b-navbar-brand href="#main">VITAN</b-navbar-brand>
-    <b-icon v-b-modal.menu-modal
-      class="menu-toggle-button"
-      style="color: #ED661A"
-      icon="gear-wide-connected"
-    >
-    </b-icon>
+<scrollactive
+  :offset="100"
+  :duration="800"
+  bezier-easing-value=".5,0,.35,1"
+ class="navbar navbar-expand-lg sticky-top">
+    <div class=mobile-nav>
+      <b-navbar-brand href="#main">VITAN</b-navbar-brand>
+      <b-icon v-b-modal.menu-modal
+        class="menu-toggle-button"
+        style="color: #ED661A"
+        icon="gear-wide-connected"
+      >
+      </b-icon>
+    </div>
     <b-modal id="menu-modal" class="menu-modal" hide-footer>
       <template #modal-header>
         <b-navbar-brand>VITAN</b-navbar-brand>
@@ -22,8 +28,7 @@
         <a @click="closeMenu()" href="#discount">Акции
           <b-badge pill class="vitan-badge">2</b-badge>
         </a>
-        <a @click="closeMenu()" href="#about">О Сервисе</a>
-        <a @click="closeMenu()" href="#">Контакты</a>
+        <a @click="closeMenu()" href="#about">Контакты</a>
       </div>
     </b-modal>
     <b-collapse id="nav-collapse" class="desktop-nav" is-nav>
@@ -37,10 +42,7 @@
         </a>
       </li>
       <li class="nav-item ml-5 mr-5">
-        <a class="nav-link scrollactive-item" href="#about">О Сервисе</a>
-      </li>
-      <li class="nav-item ml-5 mr-5">
-        <a class="nav-link scrollactive-item" href="#">Контакты</a>
+        <a class="nav-link scrollactive-item" href="#about">Контакты</a>
       </li>
       </b-navbar-nav>
     </b-collapse>
@@ -58,18 +60,12 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
   // Import Bootstrap and BootstrapVue source SCSS files
   @import '~bootstrap/scss/bootstrap.scss';
   @import '~bootstrap-vue/src/index.scss';
-  .menu-toggle-button{
-    font-size: 1.5rem;
-    color: #ED661A;
-  }
-
-  .menu-toggle-button-x{
-    font-size: 2rem;
-    color: #ED661A;
+  .mobile-nav{
+    display: none;
   }
 
   .navbar-brand{
@@ -81,62 +77,25 @@ export default {
     color: #ED661A;
   }
 
-  .modal-dialog{
-    margin: 0px;
-  }
-
-  .modal-header-content{
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .modal-content{
-    height: 100vh;
-    border-radius: 0;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
-  }
-
-  .modal-header{
-    display: flex;
-    background-color: rgba(0, 0, 0, 0.2);
-    border: none;
-    button{
-      color: #ED661A;
-    }
-  }
-
-  .menu-content{
-    display: flex;
-    flex-flow: column;
-    justify-content: end;
-    gap: 1.5rem;
-    padding-right: 1rem;
-    border: none;
-    border-radius: 0;
-    a{
-      font-size: 1.8rem;
-      font-weight: 600;
-      text-align: right;
-      color: var(--light);
-    }
-    a:hover{
-      text-decoration: none;
-    }
-  }
-
   .vitan-badge{
     background-color: #ED661A;
     color: #fff;
    }
 
   .navbar {
-    background: #000;
+    background: #000a12;
+  }
+
+  .menu-content{
+    a{
+      color: var(--light);
+    }
   }
 
   .navbar-nav li a {
    color: var(--light) !important;
+   letter-spacing: 0.075rem;
+   font-weight: 700;
    position: relative;
    text-decoration: none;
    &.is-active{
@@ -166,6 +125,12 @@ export default {
  @include media-breakpoint-down(md){
   .desktop-nav {
     display: none;
+  }
+
+  .mobile-nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
   }
 }
 </style>
