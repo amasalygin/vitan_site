@@ -1,203 +1,167 @@
 <template>
-  <b-container class="py-5">
-      <b-row>
-        <b-col>
-          <b-row>
-              <b-col>
-                  <h1 class="text-center">Услуги</h1>
-                  <h6 class="text-muted text-center" style="font-size: 16px">
-                      Мы предоставляем широкий спектр услуг по ремонту автомобилей,
-                      проведение ТО и диагностике
-                      по приемлимым ценам
-                  </h6>
-              </b-col>
-          </b-row>
-          <b-row class="mt-4" ref="servicesTop">
-            <b-col>
-              <div class="growing-search" style="margin-bottom: 1rem;">
-                <div class="input">
-                  <input
-                    type="text"
-                    name="search"
-                    class="growing-search"
-                    id="search_input"
-                    placeholder="Поиск"
-                    v-model="searchText"
-                    @input="updateSearchList(searchText)"
-                  >
-                  <button
-                  class="growing-search-right-button"
-                  @click="setSearchInputFocus()"
-                  v-if="searchText == ''">
-                    <b-icon icon="search"></b-icon>
-                  </button>
-                  <button
-                  class="growing-search-right-button"
-                  style="fontSize: 1.4rem;"
-                  @click="resetSearchInput()"
-                  v-if="searchText != ''">
-                    <b-icon icon="x"></b-icon>
-                  </button>
-                </div>
+  <b-container>
+    <div class=main-flex>
+      <div>
+        <h1 class="page-header">Услуги</h1>
+        <p class="page-header-about">
+            Мы предоставляем широкий спектр услуг по ремонту автомобилей,
+            проведение ТО и диагностике
+            по приемлимым ценам
+        </p>
+      </div>
+      <div class="services-container-flex">
+          <div class="services-search-container-flex">
+            <b-icon icon="search"></b-icon>
+            <input
+                type="search"
+                name="search"
+                class="services-search-input"
+                id="search_input"
+                placeholder="Поиск"
+                v-model="searchText"
+                @input="updateSearchList(searchText)"
+              >
+        </div>
+        <div v-if="listViewType == 'search' && searchListOptions.length == 0">
+          <h6 class="text-muted text-center">Упс...Ничего не найдено</h6>
+        </div>
+        <div class="service-buttons-container" v-if="listViewType == 'service'">
+            <button
+              class="vitan-default-button"
+              @click="reset()"
+              >
+              <b-icon icon="chevron-left"></b-icon>
+              Назад
+            </button>
+        </div>
+        <h2 v-if="listViewType == 'service'">{{servicesItems[selectedIndex].name}}</h2>
+        <div class="card-container" v-if="listViewType == 'serviceItem'">
+          <div
+            v-for="(serviceItem, i) in servicesItems"
+            :key="i"
+            class="vitan-service-card card-hover card-shadow"
+            @click="selectService(i)"
+            >
+              <div class='vitan-card-content'>
+                <p style="flex-grow: 1" class="card-title">
+                  {{serviceItem.name}}
+                </p>
+
+                <p class="card-text text-muted">
+                  {{serviceItem.services.length}} видов услуг
+                </p>
               </div>
-              <div v-if="listViewType == 'search' && searchListOptions.length == 0">
-                <h6 class="text-muted text-center">Упс...Ничего не найдено</h6>
+          </div>
+        </div>
+        <div class="card-container" v-if="listViewType == 'service'">
+          <div
+            v-for="(service, i) in servicesItems[selectedIndex].services"
+            :key="i"
+            class="vitan-service-card card-hover card-shadow"
+            >
+              <div class='vitan-card-content'>
+                <p style="flex-grow: 1" class="card-title">
+                  {{service.name}}
+                </p>
+
+                <p class="card-text text-muted">
+                  от {{service.price}} <span class="rub">Р</span>
+                </p>
               </div>
-              <b-row class="card-container mt-3" v-if="listViewType == 'serviceItem'">
-                <div
-                  v-for="(serviceItem, i) in servicesItems"
-                  :key="i"
-                  class="vitan-service-card card-hover card-shadow"
-                  @click="selectService(i)"
-                  >
-                    <div class='vitan-card-content'>
-                      <p style="flex-grow: 1" class="card-title">
-                        {{serviceItem.name}}
-                      </p>
+          </div>
+        </div>
+        <div class="card-container" v-if="listViewType == 'search'">
+          <div
+            v-for="(service, i) in searchListOptions"
+            :key="i"
+            class="vitan-service-card card-hover card-shadow"
+            >
+              <div class='vitan-card-content'>
+                <p style="flex-grow: 1" class="card-title">
+                  {{service.name}}
+                </p>
 
-                      <p class="card-text text-muted">
-                        {{serviceItem.services.length}} видов услуг
-                      </p>
-                    </div>
-                </div>
-              </b-row>
-              <b-row v-if="listViewType == 'service'">
-                <b-col>
-                <div style="display: flex;">
-                  <button
-                    class="vitan-button"
-                    @click="reset()"
-                    v-if="listViewType == 'service'">
-                      <b-icon icon="chevron-left"></b-icon>
-                      Назад
-                  </button>
-                  <div v-if="selectedIndex >= 0" class="selected-service">
-                    <p>{{servicesItems[selectedIndex].name}}</p>
-                  </div>
-                </div>
-                <b-row class="card-container mt-3">
-                    <div
-                      v-for="(service, i) in servicesItems[selectedIndex].services"
-                      :key="i"
-                      class="vitan-service-card card-hover card-shadow"
-                      >
-                        <div class='vitan-card-content'>
-                          <p style="flex-grow: 1" class="card-title">
-                            {{service.name}}
-                          </p>
-
-                          <p class="card-text text-muted">
-                            от {{service.price}} <span class="rub">Р</span>
-                          </p>
-                        </div>
-                    </div>
-                  </b-row>
-                </b-col>
-              </b-row>
-              <b-row v-if="listViewType == 'search'" class="mt-3">
-                <b-col>
-                <b-row class="card-container mt-3">
-                    <div
-                      v-for="(service, i) in searchListOptions"
-                      :key="i"
-                      class="vitan-service-card card-hover card-shadow"
-                      >
-                        <div class='vitan-card-content'>
-                          <p style="flex-grow: 1" class="card-title">
-                            {{service.name}}
-                          </p>
-
-                          <p class="card-text text-muted">
-                            от {{service.price}} <span class="rub">Р</span>
-                          </p>
-                        </div>
-                    </div>
-                  </b-row>
-                </b-col>
-              </b-row>
-            </b-col>
-          </b-row>
-          <b-row class="mt-5">
-              <b-col fluid class="vitan-block">
-                  <b-row>
-                      <b-col cols="10">
-                          <h2 style="color: #fff">Почему наши услуги
-                            <span class="text-highlighted">
-                              выгодны
-                            </span>
-                            ?
-                          </h2>
-                      </b-col>
-                  </b-row>
-                  <hr/>
-                  <p class="mt-5"
-                  style="font-size: 1.4rem; color: #fff; line-height: 1.4;">
-                    Наш автосервис выполненяет все виды слесарных работ
-                    <span class="text-highlighted">
-                      любой
-                    </span>
-                    сложности, обладая при этом рядом существенных
-                    <span class="text-highlighted">
-                      приемуществ
-                    </span>
+                <p class="card-text text-muted">
+                  от {{service.price}} <span class="rub">Р</span>
+                </p>
+              </div>
+          </div>
+        </div>
+      </div>
+    <div class="adv-flex">
+      <div class=banner-container>
+        <div class="adv-banner-header">
+            <h2>Почему наши услуги
+              <span class="text-highlighted">выгодны</span> ?
+            </h2>
+        </div>
+        <div class="banner-content">
+            <p>Наш автосервис выполненяет все виды слесарных работ
+              любой сложности, обладая при этом рядом существенных
+              приемуществ
+            </p>
+            <p>Сотни довольных клиентов, приемлимые цены и коллектив
+              профессионалов
+            </p>
+        </div>
+      </div>
+      <div class="adv-column-flex">
+          <div class="adv-column-content">
+              <b-img
+                class="vitan-img"
+                :src="timeImg"
+                alt="Responsive image">
+              </b-img>
+              <div class="column-flex">
+                  <h4 >Время</h4>
+                  <p class="text-muted">
+                    Оперативная помощь в решении Ваших вопросов
                   </p>
-              </b-col>
-              <b-col class="mt-3">
-                  <b-row class="mb-3">
-                      <b-img
-                        class="vitan-img"
-                        :src="timeImg"
-                        alt="Responsive image">
-                      </b-img>
-                      <b-col>
-                          <h4 >Время</h4>
-                          <p class="text-muted">
-                            Оперативная помощь в решении Ваших вопросов
-                          </p>
-                      </b-col>
-                  </b-row>
-                  <b-row class="mb-3">
-                      <b-img
-                        class="vitan-img"
-                        :src="devImg"
-                        alt="Responsive image">
-                      </b-img>
-                      <b-col>
-                          <h4 >Оборудование</h4>
-                          <p class="text-muted">
-                            Профессиональное оборудования для диагностики и ремонта
-                          </p>
-                      </b-col>
-                  </b-row>
-                  <b-row class="mb-3">
-                      <b-img
-                      class="vitan-img"
-                      :src="storeImg"
-                      alt="Responsive image">
-                      </b-img>
-                      <b-col>
-                          <h4 >Запчасти</h4>
-                          <p class="text-muted">
-                            Вам не нужно искать их по всему городу.
-                            Мы сами подберем и привезем всё необходимое.
-                          </p>
-                      </b-col>
-                  </b-row>
-                  <b-row class="mb-3">
-                      <b-img
-                      class="vitan-img"
-                      :src="garImg"
-                      alt="Responsive image">
-                      </b-img>
-                      <b-col>
-                          <h4 >Гарантия</h4>
-                          <p class="text-muted">На все виды выполненных работ</p>
-                      </b-col>
-                  </b-row>
-              </b-col>
-          </b-row>
-        </b-col>
-      </b-row>
+              </div>
+          </div>
+          <div class="adv-column-content">
+              <b-img
+                class="vitan-img"
+                :src="devImg"
+                alt="Responsive image">
+              </b-img>
+              <div class="column-flex">
+                  <h4 >Оборудование</h4>
+                  <p class="text-muted">
+                    Профессиональное оборудования для диагностики и ремонта
+                  </p>
+              </div>
+          </div>
+          <div class="adv-column-content">
+              <b-img
+                class="vitan-img"
+                :src="storeImg"
+                alt="Responsive image">
+              </b-img>
+              <div class="column-flex">
+                  <h4 >Запчасти</h4>
+                  <p class="text-muted">
+                    Вам не нужно искать их по всему городу.
+                    Мы сами подберем и привезем всё необходимое
+                  </p>
+              </div>
+          </div>
+          <div class="adv-column-content">
+              <b-img
+                class="vitan-img"
+                :src="garImg"
+                alt="Responsive image">
+              </b-img>
+              <div class="column-flex">
+                  <h4 >Гарантия</h4>
+                  <p class="text-muted">
+                    На все виды выполненных работ
+                  </p>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
   </b-container>
 </template>
 
@@ -479,62 +443,100 @@ export default {
 <style lang="scss">
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~bootstrap-vue/src/index.scss';
+.service-buttons-flex{
+  display: block;
+}
+.services-row{
+  margin-top: 2rem;
+}
 
-.growing-search {
-  padding: 5px 5px 5px 7px;
-  background: #fff;
+.banner-container {
+  display: flex;
+  flex-flow: column;
+  padding: 3rem;
+  gap: 5rem;
+  background-color: #000a12;
+  image-resolution: 0.2;
+  -webkit-box-shadow: 0 0rem 2rem rgba(0,0,0, 0.7);
+  box-shadow: 0 0rem 2rem rgba(0,0,0, 0.7);
+  max-width: 60%;
+}
+
+.banner-content{
   display: flex;
   flex-flow: column;
   gap: 1rem;
+  p{
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--light);
+    letter-spacing: 0.075rem;
+  }
 }
 
-.growing-search div {
-  font-size: 1.5rem;
+.adv-banner-header{
+    display: flex;
+    flex-flow: column;
+
+    h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--light);
+        text-transform:uppercase;
+        letter-spacing: 0.075rem;
+    }
+}
+
+.adv-flex{
   display: flex;
-  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
-.growing-search .input input {
-  width: 100%;
-  margin-right: 0;
-  border: none;
-  font-size: inherit;
-  padding-top: 10px;
+.adv-column-flex{
+  display: flex;
+  flex-flow: column;
+  gap: 2rem;
+}
+
+.adv-column-content{
+  display: flex;
+  gap: 1rem;
+}
+
+.services-container-flex{
+  display: flex;
+  flex-flow: column;
+  gap: 2rem;
+}
+
+.services-search-container-flex{
+  display: flex;
+  padding: 0.5rem;
   padding-left: 1rem;
-  padding-bottom: 10px;
-  padding-right: 35px;
-  color: #ED661A;
-  border-bottom: 1px solid #eee;
-  -webkit-box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.15) !important;
-  box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.15) !important;
+  gap: 0.5rem;
+  .b-icon{
+    align-self: center;
+    font-size: 1.5rem;
+  }
+  -webkit-box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
 }
 
-.growing-search .input input::placeholder {
-  color: rgba(0,0,0, 0.3);
+.services-search-input{
+border: none;
+outline: none;
+background-color: transparent;
+padding: 0.5rem;
+font-size: 1.5rem;
+width: 100%;
+color: #ED661A;
 }
 
-.growing-search .input input:focus{
-  -webkit-box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.5) !important;
-  box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.5) !important;
-}
-
-.growing-search .input input:hover, .growing-search button:hover {
-  cursor: pointer;
-}
-
-.growing-search .input input:focus, .growing-search button:focus {
-  outline: none;
-}
-
-.growing-search button:hover {
-  color: #ED661A;
-}
-
-.growing-search-right-button {
-  border: none;
-  background-color: transparent;
-  font-size: 1.2rem;
-  margin-left: -35px;
+.services-search-flex{
+  display: flex;
+  flex-flow: column;
+  gap: 1rem;
 }
 
 .serviceButton {
@@ -544,100 +546,9 @@ export default {
   padding: 10px;
 }
 
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-shrink: 2;
-  gap: 2rem;
-}
-
-.card-container::after {
-content: "";
-flex: auto;
-}
-
 .text-highlighted{
 color: #ED661A;
 text-shadow: 0px 0px 10px rgb(237,102,26);
-}
-
-.vitan-card-content {
-  display: flex;
-  flex-flow:column
-}
-
-.vitan-service-card {
-cursor: pointer;
-padding: 1rem;
-display: flex;
-justify-content: space-between;
-flex: 1 1 0;
-word-break:keep-all;
-word-wrap: normal;
-min-height: 130px;
-max-height: 130px;
-}
-
-.card-title{
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin-bottom: 0;
-}
-
-.card-text{
-  font-size: 1rem;
-  margin-bottom: 0;
-}
-
-.rub {
-  line-height: 9px;
-  width: 0.4em;
-  border-bottom: 1px solid #6c757d;
-  display: inline-block;
-}
-
-.card-hover{
--webkit-transition: .3s;
-transition: 0.3s;
-}
-
-.card-shadow{
--webkit-box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
-box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
-}
-
-.card-hover:hover, .card-hover:active {
-  -webkit-box-shadow: 0 1rem 1.5rem rgba(0,0,0,0.5) !important;
-  box-shadow: 0 1rem 1.5rem rgba(0,0,0,0.5) !important;
-  background-color: rgba(0,0,0, 0.05);
-}
-
-.card-link{
-    color: #ED661A;
-    text-transform: uppercase;
-}
-
-.p-price {
-font-size: 16px;
-font-weight: 700;
-color: #ED661A;
-margin-bottom: 0px;
-padding-left: 5rem;
-}
-
-.p-price::after{
-content: " Р";
-line-height: 5px;
-width: 0.4em;
-border-bottom: 1.5px solid #ED661A;
-margin-left: 3px;
-display: inline-block;
-}
-
-h1::first-letter {
-  color: #ED661A;;
 }
 
 hr {
@@ -690,103 +601,64 @@ hr {
   margin-top: 1rem;
 }
 
-.selected-service {
-  border: 1px solid #ED661A;
-  color: #ED661A;
-  border-radius: 0.2rem;
-  padding: 0.5rem;
-  background-color: transparent;
-  text-transform: uppercase;
-  margin: 0.2rem;
-  font-size: 1rem;
-}
-
-.selected-service p {
-  margin-bottom: 0;
-}
-
-.vitan-button {
-border: none;
-color: white;
-border-radius: 0.2rem;
-padding: 0.5rem;
-background-color: rgb(237, 102, 26);
-border-color: #ED661A;
-text-transform:uppercase;
-margin: 0.2rem;
-font-size: 1rem;
-box-shadow: 0px 0px 5px rgba(237,102,26, 1);
-}
-
-.vitan-button:hover{
-box-shadow: 0px 0px 15px rgba(237,102,26, 1);
-background-color: rgb(237, 102, 26);
-border-color: #ED661A;
-}
-
-.vitan-button:focus:hover{
-box-shadow: 0px 0px 10px rgba(237,102,26, 1);
-background-color: rgb(237, 102, 26);
-border-color: #ED661A;
-}
-
-.vitan-button:not(:disabled):not(.disabled):active{
-box-shadow: 0px 0px 15px rgba(237,102,26, 1);
-background-color: rgb(237, 102, 26);
-border-color: #ED661A;
-}
-
-.vitan-button:focus{
-box-shadow: 0px 0px 15px rgba(237,102,26, 1);
-background-color: rgb(237, 102, 26);
-border-color: #ED661A;
-}
-
-.vitan-button:not(:disabled):not(.disabled):active:focus{
-box-shadow: 0px 0px 15px rgba(237,102,26, 1);
-background-color: rgba(237, 102, 26, 0.7);
-border-color: #ED661A;
-}
-
-@include media-breakpoint-down(xl){
-  .vitan-service-card {
-    max-width: 358px;
-    min-width: 358px;
-  }
-}
-
-@include media-breakpoint-down(lg){
-  .vitan-service-card {
-    max-width: 464px;
-    min-width: 464px;
-  }
-}
-
 @include media-breakpoint-down(md){
-  .vitan-service-card {
-    max-width: 344px;
-    min-width: 344px;
+  .adv-flex{
+    flex-flow: column;
+    margin-top: 1rem;
   }
-}
 
-@include media-breakpoint-down(sm){
-  .vitan-service-card {
-    max-width: 540px;
-    min-width: 540px;
+  .banner-container{
+    max-width: 100%;
   }
 }
 
 @include media-breakpoint-down(xs){
+  .services-search-container-flex{
+    padding: 0.3rem;
+    padding-left: 0.5rem;
+    .b-icon{
+      font-size: 1rem;
+    }
+  }
+
+  .services-search-input{
+  padding: 0.3rem;
+  font-size: 1.2rem;
+  }
+
+  .services-search-flex{
+    gap: 0.5rem;
+  }
+  .services-row{
+    margin-top: 0rem;
+  }
   .vitan-service-card {
-    max-width: 340px;
-    min-width: 340px;
+    max-width: 100%;
+    min-width: 100%;
   }
-  .card-container {
-    justify-content: center;
+  .adv-banner-header{
+    h2{
+      font-size: 1.4rem;
+    }
   }
-  .card-container::after {
-    justify-content: center;
-    display: none;
+  .banner-container{
+    gap: 2rem;
+    padding: 2rem;
+  }
+  .banner-content{
+    p{
+      font-size: 1rem;
+    }
+  }
+  .adv-column-content{
+    .column-flex{
+      h4{
+        font-size: 1.2rem;
+      }
+      p{
+        font-size: 0.9rem;
+      }
+    }
   }
 }
 </style>
