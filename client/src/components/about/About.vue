@@ -5,18 +5,12 @@
                 <h1 class="page-header">Контакты</h1>
             </div>
             <div class="сontacts-content">
-                <div>
-                    <p>Наш адрес:</p>
-                    <h2>
-                        г.Пермь, ул. Васильева 8А
-                    </h2>
-                </div>
-                <div>
-                    <p>Телефон:</p>
-                    <h2>
-                        +7 (342) 279-38-36
-                    </h2>
-                </div>
+                <h5>
+                    г.Пермь, ул. Васильева 8А
+                </h5>
+                <h5>
+                    +7 (342) 279-38-36
+                </h5>
             </div>
             <div class="map-flex">
                 <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A4b2e109ee024a2ef5b8d0f26e077225c812dd5410574f60169dcbd0c76aba0be&amp;source=constructor" frameborder="0"></iframe>
@@ -30,7 +24,12 @@
 .сontacts-content{
     display: flex;
     flex-flow: column;
-    gap: 2rem;
+    gap: 1rem;
+
+    h5{
+        font-family: 'Montserrat';
+        font-weight: 500;
+    }
 }
 .map-flex{
     display: flex;
@@ -39,7 +38,7 @@
 
 iframe{
     width: 100%;
-    height: 600px;
+    height: 800px;
     padding-bottom: 4rem;
 }
 

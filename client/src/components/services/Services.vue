@@ -1,16 +1,21 @@
 <template>
   <b-container>
     <div class=main-flex>
-      <div>
+      <div style="display: flex; flex-flow:row; justify-content:space-between">
         <h1 class="page-header">Услуги</h1>
-        <p class="page-header-about">
-            Мы предоставляем широкий спектр услуг по ремонту автомобилей,
-            проведение ТО и диагностике
-            по приемлимым ценам
-        </p>
+        <div style="display: flex; flex-flow:row; align-items: center;">
+          <a href="">Посмотреть все
+          <b-img
+            :src="require('../../assets/right_arrow.svg')"
+            width="28"
+            height="28"
+          >
+          </b-img>
+          </a>
+        </div>
       </div>
       <div class="services-container-flex">
-          <div class="services-search-container-flex">
+          <!--div class="services-search-container-flex">
             <b-icon icon="search"></b-icon>
             <input
                 type="search"
@@ -21,39 +26,14 @@
                 v-model="searchText"
                 @input="updateSearchList(searchText)"
               >
-        </div>
-        <div v-if="listViewType == 'search' && searchListOptions.length == 0">
-          <h6 class="text-muted text-center">Упс...Ничего не найдено</h6>
-        </div>
-        <div class="service-buttons-container" v-if="listViewType == 'service'">
-            <button
-              class="vitan-default-button"
-              @click="reset()"
-              >
-              <b-icon icon="chevron-left"></b-icon>
-              Назад
-            </button>
-        </div>
-        <h2 v-if="listViewType == 'service'">{{servicesItems[selectedIndex].name}}</h2>
-        <div class="card-container" v-if="listViewType == 'serviceItem'">
-          <div
-            v-for="(serviceItem, i) in servicesItems"
-            :key="i"
-            class="vitan-service-card card-hover card-shadow"
-            @click="selectService(i)"
-            >
-              <div class='vitan-card-content'>
-                <p style="flex-grow: 1" class="card-title">
-                  {{serviceItem.name}}
-                </p>
+        </div-->
 
-                <p class="card-text text-muted">
-                  {{serviceItem.services.length}} видов услуг
-                </p>
-              </div>
-          </div>
+        <div class="card-container" v-if="listViewType == 'serviceItem'">
+          <template v-for="(serviceItem, i) in servicesItems">
+            <ServiceCard :key="i" :img="serviceItem.img" :name="serviceItem.name"></ServiceCard>
+          </template>
         </div>
-        <div class="card-container" v-if="listViewType == 'service'">
+        <!--div class="card-container" v-if="listViewType == 'service'">
           <div
             v-for="(service, i) in servicesItems[selectedIndex].services"
             :key="i"
@@ -87,8 +67,8 @@
               </div>
           </div>
         </div>
-      </div>
-    <div class="adv-flex">
+      </div!-->
+    <!--div class="adv-flex">
       <div class=banner-container>
         <div class="adv-banner-header">
             <h2>Почему наши услуги
@@ -159,14 +139,19 @@
                   </p>
               </div>
           </div>
-      </div>
+      </div!-->
     </div>
   </div>
   </b-container>
 </template>
 
 <script>
+import ServiceCard from '@/components/services/ServiceCard.vue';
+
 export default {
+  components: {
+    ServiceCard,
+  },
   methods:
     {
       scrollToServicesTop() {
@@ -443,6 +428,18 @@ export default {
 <style lang="scss">
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~bootstrap-vue/src/index.scss';
+a{
+  font-family: 'Montserrat';
+  font-size: 18px;
+  font-weight: 500;
+  color: #000a12 !important;
+}
+
+a:hover{
+  color: #000a12 !important;
+  text-decoration: none !important;
+}
+
 .service-buttons-flex{
   display: block;
 }
@@ -467,10 +464,10 @@ export default {
   flex-flow: column;
   gap: 1rem;
   p{
+    font-family: 'Montserrat';
     font-size: 1.2rem;
     font-weight: 600;
     color: var(--light);
-    letter-spacing: 0.075rem;
   }
 }
 
@@ -483,7 +480,6 @@ export default {
         font-weight: 700;
         color: var(--light);
         text-transform:uppercase;
-        letter-spacing: 0.075rem;
     }
 }
 
@@ -609,6 +605,12 @@ hr {
 
   .banner-container{
     max-width: 100%;
+  }
+}
+
+@include media-breakpoint-down(sm){
+  a{
+    font-size: 14px;
   }
 }
 

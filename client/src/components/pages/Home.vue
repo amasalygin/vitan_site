@@ -40,20 +40,11 @@ export default {
 <style lang="scss">
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~bootstrap-vue/src/index.scss';
-// PAGE STYLES
-p{
-    color: #4f5b62;
-    letter-spacing: 0.075rem;
-    font-weight: 500;
-    margin-bottom: 0px;
-}
-
 .page-header{
     color: #000a12;
-    letter-spacing: 0.075rem;
-    font-weight: 800;
-    text-align: center;
-    font-size: 3rem;
+    font-family: 'Montserrat';
+    font-weight: 700;
+    font-size: 2rem;
 }
 
 .page-header-about{
@@ -64,16 +55,12 @@ p{
     text-align: center;
 }
 
-.page-header::first-letter {
-  color: #ED661A;
-}
-
 // CONTAINERS
 .main-flex {
     display: flex;
     flex-flow: column;
-    gap: 2rem;
-    padding-top: 3rem;
+    gap: 1rem;
+    padding-top: 4rem;
 }
 
 .center-flex {
@@ -97,9 +84,10 @@ p{
 // CARD
 .card-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
   gap: 2rem;
-  grid-auto-rows: minmax(100px, auto);
+  justify-content: space-between;
 }
 
 .vitan-card-content {
@@ -115,7 +103,20 @@ justify-content: space-between;
 flex: 1 1 0;
 word-break:keep-all;
 word-wrap: normal;
-min-height: 7rem;
+min-height: 8rem;
+}
+
+div#vitan-card-bg {
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
+    -moz-background-origin: content-box;
+    -webkit-background-origin: content-box;
+    -moz-background-origin: content-box;
+    background-origin: content-box;
+    background-repeat: no-repeat;
+    background-position: right 5%;
 }
 
 .card-title{
@@ -159,14 +160,13 @@ transition: 0.3s;
 }
 
 .card-shadow{
--webkit-box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
-box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
+  -webkit-box-shadow: 0rem 2rem 3rem -1rem rgba(#000a12, 0.3);
+  box-shadow: 0rem 1rem 1.5rem -1rem rgba(#000a12, 0.3);
 }
 
 .card-hover:hover, .card-hover:active {
-  -webkit-box-shadow: 0 1rem 1.5rem rgba(0,0,0,0.5) !important;
-  box-shadow: 0 1rem 1.5rem rgba(0,0,0,0.5) !important;
-  background-color: rgba(0,0,0, 0.05);
+  -webkit-box-shadow: 0rem 2rem 3rem -1rem rgba(#000a12, 0.6);
+  box-shadow: 0rem 1.2rem 1.7rem -1rem rgba(#000a12, 0.6);
 }
 
 .card-link{
@@ -225,11 +225,11 @@ border-color: #ED661A;
 }
 
 .vitan-button {
-border-radius: 60px;
-padding-left: 50px;
-padding-right: 50px;
-padding-bottom: 15px;
-padding-top: 15px;
+border-radius: 1rem;
+padding-left: 4rem;
+padding-right: 4rem;
+padding-bottom: 1.5rem;
+padding-top: 1.5rem;
 background-color: rgb(237, 102, 26);
 border-color: #ED661A;
 text-transform:uppercase;
@@ -269,11 +269,11 @@ border-color: #ED661A;
 }
 
 .vitan-button-outline {
-border-radius: 60px;
-padding-left: 50px;
-padding-right: 50px;
-padding-bottom: 15px;
-padding-top: 15px;
+border-radius: 1rem;
+padding-left: 4rem;
+padding-right: 4rem;
+padding-bottom: 1.5rem;
+padding-top: 1.5rem;
 background-color: transparent;
 border-color: #ED661A;
 text-transform:uppercase;
@@ -401,9 +401,39 @@ margin: 0px;
 }
 
 // BREAKPOINTS MEDIA
+@include media-breakpoint-down(md){
+  .card-container {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-auto-flow: column;
+    gap: 1.5rem;
+    justify-content: space-between;
+  }
+}
+
+// BREAKPOINTS MEDIA
 @include media-breakpoint-down(sm){
   .card-container {
-    grid-template-columns: repeat(2, 1fr);
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-auto-flow: column;
+    gap: 1.2rem;
+  }
+
+  .vitan-button{
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+  }
+
+  .vitan-button-outline{
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
   }
 }
 
@@ -411,7 +441,9 @@ margin: 0px;
     .main-flex{
     }
      .card-container {
-        grid-template-columns: repeat(1, 1fr);
+       gap: 1rem;
+        grid-auto-columns: minmax(0, 1fr);
+        grid-template-rows: repeat(2, 1fr);
         justify-content: start;
     }
     .page-header{

@@ -1,28 +1,15 @@
 <template>
     <b-container class="main-flex pt-0">
-         <div class="header-flex">
-            <h2>
-                <b-icon icon="telephone"></b-icon>
-                +7 (342) 279-38-36
-            </h2>
-            <h2>
-                <b-icon icon="clock"></b-icon>
-                Ежедневно 9:00-21:00
-            </h2>
-            <h2>
-                <b-icon icon="geo-alt"></b-icon>
-                ул. Васильева 8А
-            </h2>
-        </div>
         <div class=main-banner>
             <div class="banner-header">
                 <h1>VITAN</h1>
                 <h2>Ремонт и обслуживание вашего в авто в Перми</h2>
             </div>
             <div class="text-column-flex">
-                <h2><b-icon icon="nut-fill"></b-icon> ВСЕ ВИДЫ АВТОСЛЕСАРНЫХ РАБОТ</h2>
-                <h2><b-icon icon="nut-fill"></b-icon> АВТОДИАГНОСТИКА</h2>
-                <h2><b-icon icon="nut-fill"></b-icon> АВТОЭЛЕКТРИКА</h2>
+                <h3>Все виды автослесарных работ</h3>
+                <h3>Автодиагностика</h3>
+                <h3>Автоэлектрика</h3>
+                <h3>Обслуживаем все марки автомобилей</h3>
             </div>
             <div class="buttons-flex">
                 <b-button
@@ -35,9 +22,6 @@
                     Обратный звонок
                 </b-button>
             </div>
-            <h6 class="column-footer-text">
-                Обслуживаем все марки автомобилей
-            </h6>
         </div>
         <b-modal id="backCallModal" class="menu-modal" hide-footer hide-backdrop>
              <template #modal-header>
@@ -154,54 +138,45 @@ p{
 .main-banner{
     display: flex;
     flex-flow: column;
-    padding-left: 6rem;
-    padding-right: 6rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
     padding-top: 3rem;
-    padding-bottom: 3rem;
-    gap: 3rem;
-    background: url("../../assets/test_main.png") no-repeat right center/50%, #000a12;
-    -webkit-box-shadow: 0 0rem 2rem rgba(0,0,0, 0.7);
-    box-shadow: 0 0rem 2rem rgba(0,0,0, 0.7);
+    padding-bottom: 4rem;
+    gap: 2rem;
+    border-radius: 3rem;
+    background: url("../../assets/test_main.png") no-repeat right center/55%, #000a12;
 
     h1 {
-        font-size: 8rem;
-        font-weight: 800;
+        font-family: 'Montserrat';
+        font-size: 6rem;
+        font-weight: 1000;
         color: #ED661A;
         letter-spacing: 0.075rem;
     }
 
-    h2 {
+    h3 {
         font-size: 1.2rem;
-        font-weight: 600;
+        font-family: 'Montserrat';
+        font-weight: 400;
         color: var(--light);
-        letter-spacing: 0.075rem;
-    }
-
-    h6{
-        font-size: 0.8rem;
-        font-weight: 600;
-        color: var(--light);
-        letter-spacing: 0.075rem;
-        text-transform:uppercase;
     }
 
     .text-column-flex {
         display: flex;
         flex-flow: column;
-        gap: 1rem;
+        gap: 0.7rem;
     }
 }
 
 .banner-header{
     display: flex;
     flex-flow: column;
-
     h2 {
-        font-size: 1.5rem;
-        font-weight: 700;
+        font-size: 1.3rem;
+        font-family: 'Montserrat';
+        font-weight: 600;
         color: var(--light);
         text-transform:uppercase;
-        letter-spacing: 0.075rem;
         max-width: 60%;
     }
 }
@@ -209,12 +184,12 @@ p{
 .buttons-flex {
     display: flex;
     flex-flow: row;
-    gap: 1.5rem;
+    gap: 2rem;
     button{
-        font-size: 0.9rem;
-        font-weight: 700;
+        font-family: 'Montserrat';
+        font-size: 1.1rem;
+        font-weight: 400;
         color: var(--light);
-        letter-spacing: 0.075rem;
     }
 }
 
@@ -228,29 +203,6 @@ p{
         font-weight: 700;
         font-size: 1.4rem;
         line-height: 2rem;
-    }
-}
-
-.header-flex{
-    display: flex;
-    flex-flow: row;
-    white-space: nowrap;
-    gap: 0.5rem;
-    margin-top: 3rem;
-    justify-content: space-between;
-    h2 {
-        font-size: 0.9rem;
-        font-weight: 700;
-        color: #000a12;
-        letter-spacing: 0.075rem;
-        align-self: center;
-        vertical-align: center;
-        padding-bottom: 0px;
-        margin-bottom: 0px;
-    }
-    .b-icon{
-        font-size: 1rem;
-        align-self: center;
     }
 }
 
@@ -371,12 +323,16 @@ text-shadow: 0px 0px 25px rgba(237,102,26, 1);
             font-size: 1.1rem;
         }
 
+        h3 {
+            font-size: 1rem;
+        }
+
         h6{
             font-size: 0.7rem;
         }
 
         .text-column-flex {
-            gap: 0.7rem;
+            gap: 0.5rem;
         }
     }
 
@@ -386,9 +342,6 @@ text-shadow: 0px 0px 25px rgba(237,102,26, 1);
         gap: 1.5rem;
         button{
             font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--light);
-            letter-spacing: 0.075rem;
         }
     }
 
@@ -397,41 +350,34 @@ text-shadow: 0px 0px 25px rgba(237,102,26, 1);
             max-width: 100%;
         }
     }
-
-    .header-flex{
-        h2 {
-            font-size: 0.9rem;
-            font-weight: 700;
-        }
-    }
 }
 
 @include media-breakpoint-down(sm){
     .main-banner{
         padding-left: 2rem;
         padding-right: 2rem;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        border-radius: 2rem;
+
         h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
         }
+
         h2{
-            font-size: 1rem;
+            font-size: 0.9rem;
+        }
+
+        h3 {
+            font-size: 0.8rem;
         }
     }
+
     .buttons-flex{
         flex-flow: column;
-    }
-    .header-flex{
-        flex-flow: column;
-        margin-top: 1rem;
-        h2 {
+        width: 70%;
+        button{
             font-size: 0.8rem;
-            font-weight: 700;
-        }
-        .b-icon{
-            font-size: 0.9rem;
-            align-self: center;
         }
     }
 
@@ -485,20 +431,6 @@ text-shadow: 0px 0px 25px rgba(237,102,26, 1);
     .buttons-flex{
         flex-flow: column;
         gap: 1rem;
-    }
-    .header-flex{
-        flex-flow: column;
-        margin-top: 1rem;
-        h2 {
-            font-size: 1rem;
-            font-weight: 700;
-            text-align: left;
-            align-self: start;
-        }
-        .b-icon{
-            font-size: 1.1rem;
-            align-self: center;
-        }
     }
 
     .modal-content-container{
