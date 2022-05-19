@@ -1,0 +1,14 @@
+[
+    {
+      "name": "Диагностика подвески",
+      "discount_value": "БЕСПЛАТНО",
+      "img": "promo_podveska.png",
+      "bg": "orange"
+    },
+    {
+      "name": "Замена масла",
+      "img": "promo_maslo.png",
+      "discount_value": "БЕСПЛАТНО",
+      "bg": "red"
+    }
+]

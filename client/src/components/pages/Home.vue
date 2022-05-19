@@ -1,38 +1,130 @@
 <template>
-    <b-container
-    ref="content"
-    fluid
-    style="padding-left: 0px; padding-right:0px;">
-        <Nav />
-        <section id="main">
-            <Main/>
-        </section>
-        <section id="services">
-            <Services />
-        </section>
-        <section id="discount">
-            <Discount />
-        </section>
-        <section id="about">
-            <About />
-        </section>
+<div>
+  <b-container>
+      <Main/>
+      <div class="main-section-container">
+        <SectionHeader
+          :name="'Услуги'"
+          :description="
+          'Выполняем качественный ремонт автомобилей в Перми с гарантией и по справедливым ценам'
+          "
+          :isShowUnderLine="true"
+          :routeLabel="'Посмотреть все'"
+          :routeName="'services'"
+          />
+        <div class="services-container-flex">
+          <div class="card-container">
+            <template v-for="(serviceItem, i) in servicesList">
+              <IconCard
+                :key="i"
+                :data="serviceItem"
+                :index="i"
+                :routeName="'category'"
+                :routeParams="{ tag: serviceItem.tag}">
+              </IconCard>
+            </template>
+          </div>
+        </div>
+      </div>
+      <div class="main-section-container">
+        <SectionHeader
+          :name="'Акции'"
+          :description="
+          'Период и подробности проведения акций Вы можете уточнить по телефону '+
+          'или написав нам в удобном для Вас мессенджере'
+          "
+          :isShowUnderLine="true"
+          :routeLabel="'Посмотреть все'"
+          :routeName="'services'"
+          />
+        <div class="discount-container">
+          <template v-for="(discountItem, i) in discountList">
+            <PromoCard
+              :key="i"
+              :text="discountItem.discount_value"
+              :header="discountItem.name"
+              :bg="discountItem.bg"
+              :img="discountItem.img">
+            </PromoCard>
+          </template>
+        </div>
+      </div>
+  </b-container>
+  <div class="dark-bg-fluid">
+    <b-container>
+      <div class="main-section-container" style="gap: 4rem">
+        <SectionHeader
+          :name="'Наши приемущества'"
+          :invert="true"
+          :description="'Это ваши : '"
+          />
+        <div class="advantage-wrapper">
+          <template v-for="(feature, i) in features">
+            <AdvantageItem
+              :key="i"
+              :text="feature.text"
+              :header="feature.name"
+              :bg="feature.bg"
+              :img="feature.img">
+            </AdvantageItem>
+          </template>
+        </div>
+        <BackcallCard :name="'Остались вопросы?'"/>
+      </div>
     </b-container>
+  </div>
+  <Footer></Footer>
+</div>
 </template>
 
 <script>
 import Main from '@/components/main/Main.vue';
-import Services from '@/components/services/Services.vue';
-import Discount from '@/components/discount/Discount.vue';
-import Nav from '@/components/nav/Nav.vue';
-import About from '@/components/about/About.vue';
+import SectionHeader from '@/components/shared/SectionHeader.vue';
+import IconCard from '@/components/shared/IconCard.vue';
+import PromoCard from '@/components/shared/PromoCard.vue';
+import AdvantageItem from '@/components/shared/AdvantageItem.vue';
+import BackcallCard from '@/components/shared/BackcallCard.vue';
+import Footer from '@/components/footer/Footer.vue';
+import ServicesJson from '../../static/services.json';
+import DiscountsJson from '../../static/discounts.json';
 
 export default {
   components: {
     Main,
-    Nav,
-    Discount,
-    Services,
-    About,
+    IconCard,
+    SectionHeader,
+    PromoCard,
+    AdvantageItem,
+    BackcallCard,
+    Footer,
+  },
+  data: () => {
+    const data = {
+      prevOffset: 0,
+      servicesList: ServicesJson,
+      discountList: DiscountsJson,
+      features: [
+        {
+          name: 'Время',
+          text: 'Оперативная помощь в решении ваших вопросов',
+          bg: 'black',
+          img: 'time.svg',
+        },
+        {
+          name: 'Удобство',
+          text: 'Вам не нужно искать их по всему городу. Мы сами подберем и привезем всё необходимое',
+          bg: 'black',
+          img: 'comfort.svg',
+        },
+        {
+          name: 'Гарантия',
+          text: 'На все виды выполненых работ',
+          bg: 'black',
+          img: 'warranty.svg',
+        },
+      ],
+    };
+    return data;
   },
 };
 </script>
@@ -40,27 +132,44 @@ export default {
 <style lang="scss">
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~bootstrap-vue/src/index.scss';
-.page-header{
-    color: #000a12;
-    font-family: 'Montserrat';
-    font-weight: 700;
-    font-size: 2rem;
+
+.page-container{
+  display: flex;
+  flex-flow: column;
 }
 
-.page-header-about{
-    color: #4f5b62;
-    font-size: 1.2rem;
-    letter-spacing: 0.075rem;
-    font-weight: 500;
-    text-align: center;
+a{
+  font-family: 'Montserrat';
+  font-size: 18px;
+  font-weight: 500;
+  color: #000a12 !important;
+}
+
+a:hover{
+  color: #000a12 !important;
+  text-decoration: none !important;
 }
 
 // CONTAINERS
-.main-flex {
+.main-section-container {
     display: flex;
     flex-flow: column;
-    gap: 1rem;
-    padding-top: 4rem;
+    gap: 24px;
+}
+
+.dark-bg-fluid{
+  margin-top: 4rem;
+  background: linear-gradient(90deg, #000A12 0%, rgba(0, 10, 18, 0.9) 30%,
+   rgba(0, 10, 18, 0.9) 70%, #000A12 100%),
+   linear-gradient(360deg, #000A12 0%, rgba(0, 10, 18, 0.6) 20%,
+   rgba(0, 10, 18, 0.5) 80%, #000A12 100%);
+   padding-bottom: 4rem;
+}
+
+.advantage-wrapper{
+  display: flex;
+  flex-flow: column;
+  gap: 3rem;
 }
 
 .center-flex {
@@ -79,6 +188,15 @@ export default {
 
 .column-footer-text {
     color: var(--light);
+}
+
+.discount-container{
+  display: flex;
+  flex-flow: row;
+  gap: 2rem;
+  padding-bottom: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 // CARD
@@ -174,144 +292,6 @@ transition: 0.3s;
     text-transform: uppercase;
 }
 
-// BUTTONS
-.vitan-default-button {
-border: none;
-color: var(--light);
-border-radius: 0.2rem;
-padding: .6rem;
-margin: 0.2rem;
-background-color: rgb(237, 102, 26);
-border-color: #ED661A;
-text-transform:uppercase;
-font-size: 1.2rem;
-letter-spacing: 0.075rem;
-font-weight: 500;
-box-shadow: 0px 0px 5px rgba(237,102,26, 1);
-.b-icon{
-    color: var(--light);
-    font-size: 1.3rem;
-}
-}
-
-.vitan-default-button:hover{
-box-shadow: 0px 0px 15px rgba(237,102,26, 1);
-background-color: rgb(237, 102, 26);
-border-color: #ED661A;
-}
-
-.vitan-default-button:focus:hover{
-box-shadow: 0px 0px 10px rgba(237,102,26, 1);
-background-color: rgb(237, 102, 26);
-border-color: #ED661A;
-}
-
-.vitan-default-button:not(:disabled):not(.disabled):active{
-box-shadow: 0px 0px 15px rgba(237,102,26, 1);
-background-color: rgb(237, 102, 26);
-border-color: #ED661A;
-}
-
-.vitan-default-button:focus{
-box-shadow: 0px 0px 15px rgba(237,102,26, 1);
-background-color: rgb(237, 102, 26);
-border-color: #ED661A;
-}
-
-.vitan-default-button:not(:disabled):not(.disabled):active:focus{
-box-shadow: 0px 0px 15px rgba(237,102,26, 1);
-background-color: rgba(237, 102, 26, 0.7);
-border-color: #ED661A;
-}
-
-.vitan-button {
-border-radius: 1rem;
-padding-left: 4rem;
-padding-right: 4rem;
-padding-bottom: 1.5rem;
-padding-top: 1.5rem;
-background-color: rgb(237, 102, 26);
-border-color: #ED661A;
-text-transform:uppercase;
-font-size: 1rem;
-box-shadow: 0px 0px 20px rgba(237,102,26, 1);
-white-space: nowrap;
-}
-
-.vitan-button:hover{
-box-shadow: 0px 0px 40px rgba(237,102,26, 1);
-background-color: rgb(237, 102, 26);
-border-color: #ED661A;
-}
-
-.vitan-button:focus:hover{
-box-shadow: 0px 0px 40px rgba(237,102,26, 1);
-background-color: rgb(237, 102, 26);
-border-color: #ED661A;
-}
-
-.vitan-button:not(:disabled):not(.disabled):active{
-box-shadow: 0px 0px 20px rgba(237,102,26, 1);
-background-color: rgb(237, 102, 26);
-border-color: #ED661A;
-}
-
-.vitan-button:focus{
-box-shadow: 0px 0px 20px rgba(237,102,26, 1);
-background-color: rgb(237, 102, 26);
-border-color: #ED661A;
-}
-
-.vitan-button:not(:disabled):not(.disabled):active:focus{
-box-shadow: 0px 0px 60px rgba(237,102,26, 1);
-background-color: rgba(237, 102, 26, 0.7);
-border-color: #ED661A;
-}
-
-.vitan-button-outline {
-border-radius: 1rem;
-padding-left: 4rem;
-padding-right: 4rem;
-padding-bottom: 1.5rem;
-padding-top: 1.5rem;
-background-color: transparent;
-border-color: #ED661A;
-text-transform:uppercase;
-font-size: 1rem;
-box-shadow: none;
-white-space: nowrap;
-}
-
-.vitan-button-outline:hover{
-background-color: rgba(237, 102, 26, 1);
-border-color: #ED661A;
-box-shadow: none;
-}
-
-.vitan-button-outline:focus:hover{
-background-color: rgba(237, 102, 26, 1);
-border-color: #ED661A;
-box-shadow: none;
-}
-
-.vitan-button-outline:not(:disabled):not(.disabled):active{
-background-color: rgba(237, 102, 26, 1);
-border-color: #ED661A;
-box-shadow: none;
-}
-
-.vitan-button-outline:focus{
-background-color: transparent;
-border-color: #ED661A;
-box-shadow: none;
-}
-
-.vitan-button-outline:not(:disabled):not(.disabled):active:focus{
-background-color: rgba(237, 102, 26, 0.7);
-border-color: #ED661A;
-box-shadow: none;
-}
-
 //MODALAS
 .modal-dialog{
 padding: 0px;
@@ -402,13 +382,21 @@ margin: 0px;
 
 // BREAKPOINTS MEDIA
 @include media-breakpoint-down(md){
+
   .card-container {
     display: grid;
     grid-auto-columns: minmax(0, 1fr);
     grid-template-rows: repeat(2, 1fr);
     grid-auto-flow: column;
-    gap: 1.5rem;
+    grid-row-gap: 3rem;
+    grid-column-gap: 1rem;
     justify-content: space-between;
+  }
+
+  .main-section-container {
+    display: flex;
+    flex-flow: column;
+    gap: 10px;
   }
 }
 
@@ -419,50 +407,30 @@ margin: 0px;
     grid-auto-columns: minmax(0, 1fr);
     grid-template-rows: repeat(2, 1fr);
     grid-auto-flow: column;
-    gap: 1.2rem;
+    grid-row-gap: 2.5rem;
+    grid-column-gap: 1rem;
   }
 
-  .vitan-button{
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-    padding-bottom: 1rem;
-    padding-top: 1rem;
+  .dark-bg-fluid{
+    background: linear-gradient(180deg,rgba(0, 10, 18, 0.96) 0%, rgba(0, 10, 18, 0.94) 10%,
+    rgba(0, 10, 18, 0.92) 50%,
+    rgba(0, 10, 18, 0.94) 90%,
+    rgba(0, 10, 18, 0.96) 100%);
   }
 
-  .vitan-button-outline{
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-    padding-bottom: 1rem;
-    padding-top: 1rem;
+  .discount-container{
+    gap: 1rem;
   }
+
 }
 
 @include media-breakpoint-down(xs){
-    .main-flex{
-    }
      .card-container {
-       gap: 1rem;
         grid-auto-columns: minmax(0, 1fr);
         grid-template-rows: repeat(2, 1fr);
         justify-content: start;
-    }
-    .page-header{
-        font-size: 2rem;
-        text-align: left;
-    }
-
-    .page-header-about{
-        font-size: 0.9rem;
-        text-align: left;
-    }
-
-    .vitan-button{
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-    .vitan-button-outline{
-        padding-left: 20px;
-        padding-right: 20px;
+        grid-row-gap: 2rem;
+        grid-column-gap: 1rem;
     }
 }
 </style>

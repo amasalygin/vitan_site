@@ -1,41 +1,35 @@
 <template>
-  <b-container>
-    <div class="main-flex">
-      <div>
-        <h1 class="page-header">Акции</h1>
-      </div>
-      <div class="discount-card-container">
-          <template v-for="(discountItem, i) in discountItems">
-            <DiscountCard
-              :key="i"
-              :discount="discountItem.discount_value"
-              :header="discountItem.name"
-              :bg="discountItem.bg">
-            </DiscountCard>
-          </template>
-      </div>
-    </div>
-  </b-container>
+  <div class="discount-card-container">
+      <template v-for="(discountItem, i) in discountItems">
+        <PromoCard
+          :key="i"
+          :text="discountItem.discount_value"
+          :header="discountItem.name"
+          :bg="discountItem.bg"
+          :img="discountItem.img">
+        </PromoCard>
+      </template>
+  </div>
 </template>
 
 <script>
-import DiscountCard from '@/components/discount/DiscountCard.vue';
+import PromoCard from '@/components/shared/PromoCard.vue';
 
 export default {
   components: {
-    DiscountCard,
+    PromoCard,
   },
   data() {
     return {
       discountItems: [
         {
           name: 'Диагностика подвески',
-          discount_value: 'Бесплатно',
+          discount_value: 'БЕСПЛАТНО',
           bg: 'orange',
         },
         {
           name: 'Замена масла',
-          discount_value: 'Бесплатно',
+          discount_value: 'БЕСПЛАТНО',
           bg: 'red',
         },
       ],
@@ -50,7 +44,9 @@ export default {
 
 .discount-card-container{
   display: flex;
-  flex-flow: column;
-  gap: 2rem;
+  flex-flow: row;
+  gap: 1rem;
+  overflow: scroll;
+  overflow-y: hidden;
 }
 </style>

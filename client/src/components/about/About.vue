@@ -1,22 +1,20 @@
 <template>
-    <b-container>
-        <div class="main-flex">
-            <div>
-                <h1 class="page-header">Контакты</h1>
-            </div>
-            <div class="сontacts-content">
-                <h5>
-                    г.Пермь, ул. Васильева 8А
-                </h5>
-                <h5>
-                    +7 (342) 279-38-36
-                </h5>
-            </div>
-            <div class="map-flex">
-                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A4b2e109ee024a2ef5b8d0f26e077225c812dd5410574f60169dcbd0c76aba0be&amp;source=constructor" frameborder="0"></iframe>
-            </div>
+    <div class="main-flex">
+        <div>
+            <h1 class="page-header">Контакты</h1>
         </div>
-    </b-container>
+        <div class="сontacts-content">
+            <h5>
+                г.Пермь, ул. Васильева 8А
+            </h5>
+            <h5>
+                +7 (342) 279-38-36
+            </h5>
+        </div>
+        <div class="map-flex">
+            <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A4b2e109ee024a2ef5b8d0f26e077225c812dd5410574f60169dcbd0c76aba0be&amp;source=constructor" frameborder="0"></iframe>
+        </div>
+    </div>
 </template>
 <style lang="scss">
 @import '~bootstrap/scss/bootstrap.scss';
