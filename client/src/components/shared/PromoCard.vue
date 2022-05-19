@@ -27,9 +27,8 @@ export default {
 @import '~bootstrap-vue/src/index.scss';
 
 .bg-wrapper{
-    //background-color: #fff;
-    width: 350px;
-    height: 400px;
+    width: 300px;
+    height: 350px;
     position: relative;
 }
 
